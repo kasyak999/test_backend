@@ -1,0 +1,1 @@
+from .cadastral import router as cadastral_router  # noqa
