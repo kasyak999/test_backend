@@ -8,3 +8,13 @@ services:
       - db_data:/var/lib/postgresql/data
     ports:
       - "${POSTGRES_PORT}:5432"
+  web:
+    build: ./src/
+    command: >
+      sh -c "alembic upgrade head &&
+      uvicorn main:app --host 0.0.0.0 --port 7000 --reload"
+    depends_on:
+      - db
+    env_file: .env
+    ports:
+      - "7000:7000"
