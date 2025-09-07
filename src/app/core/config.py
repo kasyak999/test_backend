@@ -8,8 +8,8 @@ class Settings(BaseSettings):
     postgres_password: str = 'mysecretpassword'
     postgres_db: str = 'django'
     postgres_port: str = '5433'
-
-    DEBUG: bool = True
+    secret: str = 'SECRET'
+    DEBUG: bool = False
 
     @property
     def database_url(self) -> str:

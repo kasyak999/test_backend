@@ -9,6 +9,8 @@ from app.crud.history import history_crud
 import time
 from app.api.validators import (
     check_cadastral_number, check_not_cadastral_number)
+from app.core.user import current_user
+from app.models import User
 
 router = APIRouter()
 
@@ -21,6 +23,7 @@ router = APIRouter()
 )
 async def create_donation(
     donation: CadastralCreate,
+    dependencies: User = Depends(current_user),
     session: AsyncSession = Depends(get_async_session),
 ):
     """Добавить кадастровый номер."""
