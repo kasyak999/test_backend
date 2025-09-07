@@ -7,7 +7,9 @@ from app.schemas.cadastral import (
 from app.crud.cadastral import cadastral_crud
 from app.crud.history import history_crud
 import time
-from app.api.validators import check_cadastral_number
+from app.api.validators import (
+    check_cadastral_number, check_not_cadastral_number)
+
 router = APIRouter()
 
 
@@ -39,6 +41,7 @@ async def get_all_charity_projects(
 ):
     """История запросов."""
     cadastral_id = await cadastral_crud.get_id(cadastral_number, session)
+    await check_not_cadastral_number(cadastral_id)
     return await history_crud.get_cadastral_number(cadastral_id, session)
 
 
@@ -67,6 +70,7 @@ async def check_cadastral(
     """Проверка кадастрового номера."""
     response_server = {"status": True}  # Эмуляция ответа сервера
     cadastral_id = await cadastral_crud.get_id(cadastral_number, session)
+    await check_not_cadastral_number(cadastral_id)
     cadastral = CadastralCheck(
         request_id=cadastral_id, status=response_server["status"])
     await history_crud.create(cadastral, session)

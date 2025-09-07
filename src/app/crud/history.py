@@ -1,5 +1,5 @@
 from app.models import History
-from sqlalchemy import select, literal
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.crud.base import CRUDBase
 from sqlalchemy.orm import joinedload
