@@ -3,11 +3,26 @@ from fastapi import FastAPI, Depends
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.core.db import get_async_session
+from app.core.db import get_async_session, engine
 from app.api.routers import main_router
+
+from sqladmin import Admin
+from app.core.admin import (
+    UserAdmin, RequestModelAdmin, HistoryAdmin, AdminAuth)
+from app.core.config import settings
+
 app = FastAPI()
 
 app.include_router(main_router)
+
+
+authentication_backend = AdminAuth(secret_key=settings.secret)
+admin = Admin(app, engine, authentication_backend=authentication_backend)
+# admin = Admin(app, engine)
+
+admin.add_view(UserAdmin)
+admin.add_view(RequestModelAdmin)
+admin.add_view(HistoryAdmin)
 
 
 @app.get(

@@ -29,7 +29,7 @@ class ResponseServer(BaseModel):
 
 class CadastralCheck(BaseModel):
     """Ответ эмулируемого сервера"""
-    request_id: int = Field(..., gt=0, description="ID записи из RequestModel")
+    request_id: str = Field(..., description="ID записи из RequestModel")
     status: Optional[bool] = Field(None, description="Результат запроса")
 
 

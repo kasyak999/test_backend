@@ -1,8 +1,8 @@
-"""комментарий335
+"""комментарий
 
-Revision ID: 0c882c004a43
+Revision ID: 39e080db883f
 Revises: 
-Create Date: 2025-09-07 23:49:18.511858
+Create Date: 2025-09-09 22:59:00.171222
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '0c882c004a43'
+revision: str = '39e080db883f'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -41,10 +41,10 @@ def upgrade() -> None:
     op.create_index(op.f('ix_user_email'), 'user', ['email'], unique=True)
     op.create_table('history',
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=False, comment='Дата и время создания записи.'),
-    sa.Column('request_id', sa.Integer(), nullable=False, comment='ID Кадастровый номер.'),
+    sa.Column('request_id', sa.String(length=50), nullable=False, comment='ID Кадастровый номер.'),
     sa.Column('status', sa.Boolean(), nullable=True, comment='Результат запроса.'),
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['request_id'], ['requestmodel.id'], ondelete='CASCADE'),
+    sa.ForeignKeyConstraint(['request_id'], ['requestmodel.cadastral_number'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

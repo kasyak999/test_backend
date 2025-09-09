@@ -12,7 +12,7 @@ class CadastralCrud(CRUDBase):
         session: AsyncSession,
     ):
         db_obj = await session.execute(
-            select(self.model.id).where(
+            select(self.model).where(
                 self.model.cadastral_number == cadastral_number
             )
         )

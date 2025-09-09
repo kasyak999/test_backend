@@ -75,6 +75,6 @@ async def check_cadastral(
     cadastral_id = await cadastral_crud.get_id(cadastral_number, session)
     await check_not_cadastral_number(cadastral_id)
     cadastral = CadastralCheck(
-        request_id=cadastral_id, status=response_server["status"])
+        request_id=cadastral_id.cadastral_number, status=response_server["status"])
     await history_crud.create(cadastral, session)
     return cadastral

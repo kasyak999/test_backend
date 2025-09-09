@@ -27,6 +27,9 @@ class RequestModel(Base):
         cascade="all, delete-orphan"
     )
 
+    def __repr__(self) -> str:
+        return f'{self.cadastral_number}'
+
 
 class History(Base):
     created_at: Mapped[datetime] = mapped_column(
@@ -35,10 +38,10 @@ class History(Base):
         nullable=False,
         comment="Дата и время создания записи.",
     )
-    request_id: Mapped[int] = mapped_column(
-        ForeignKey("requestmodel.id", ondelete="CASCADE"),
+    request_id: Mapped[str] = mapped_column(
+        ForeignKey("requestmodel.cadastral_number", ondelete="CASCADE"),
         nullable=False,
-        comment="ID Кадастровый номер.",
+        comment="Кадастровый номер.",
     )
     status: Mapped[bool] = mapped_column(
         Boolean,
