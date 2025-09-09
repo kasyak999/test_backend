@@ -19,13 +19,23 @@ def get_column_comments(model):
 
 
 class UserAdmin(ModelView, model=User):
-    column_list = [User.id, User.email]
+    column_list = [
+        User.id, User.email, User.is_active, User.is_superuser, User.is_verified]
+    column_labels = {
+        "is_active": "Активный",
+        "is_superuser": "Суперпользователь",
+        "is_verified": "Проверенный",
+    }
+    name = "пользователя"
+    name_plural = "Пользователи"
 
 
 class RequestModelAdmin(ModelView, model=RequestModel):
-    column_list = [RequestModel.id, RequestModel.cadastral_number]
-    # name = "Request1"
-    # name_plural = "Requests33"
+    column_list = [
+        RequestModel.id, RequestModel.cadastral_number,
+        RequestModel.latitude, RequestModel.longitude]
+    name = "кадастровые номера"
+    name_plural = "Кадастровый номер"
     column_labels = get_column_comments(RequestModel)
 
 
@@ -33,6 +43,8 @@ class HistoryAdmin(ModelView, model=History):
     column_list = [
         History.id, History.request_id, History.created_at, History.status]
     column_labels = get_column_comments(History)
+    name = "историю"
+    name_plural = "История"
 
 
 pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
